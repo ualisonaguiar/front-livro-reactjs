@@ -1,0 +1,12 @@
+{
+  "livro": [
+    {
+      "id": "1",
+      "nome": "Curso de Laravel",
+      "autor": "Ualison Aguiar",
+      "quantidade": "10",
+      "preco": "12.80",
+      "dt_lancamento": "2025-08-29"
+    }
+  ]
+}
