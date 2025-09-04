@@ -35,9 +35,10 @@ const LivroListagemPage = ({ livros, excluir }: Props) => {
                                     <Link to={`/livro/edit/${livro.id}`}>
                                         <BiPen>Editar</BiPen>
                                     </Link>
-                                    <Link to="#" onClick={() => excluir(livro)}>
-                                        <BiTrash>Excluir</BiTrash>
-                                    </Link>
+                                    <BiTrash
+                                        title="Excluir"
+                                        onClick={() => excluir(livro)}
+                                    />
                                 </td>
                             </tr>
                         ))}

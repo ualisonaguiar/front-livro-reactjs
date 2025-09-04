@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import LivroListagem from '../components/Livro/Listagem';
-import LivroAdicionarForm from '../components/Livro/Adicionar';
-import LivrEditarForm from '../components/Livro/Editar';
+import LivroListagem from '../components/Livro/LivroListagem';
+import LivroAdicionarForm from '../components/Livro/LivroAdicionarForm';
+import LivrEditarForm from '../components/Livro/LivrEditarForm';
 
 export function AppRouter() {
     return (

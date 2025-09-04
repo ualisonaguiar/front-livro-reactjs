@@ -3,24 +3,26 @@ import api from "./api";
 
 class LivroService {
 
+    private contexto: string = "livros";
+
     async listagem() {
-        return api.get<Livro[]>("");
+        return api.get<Livro[]>(this.contexto);
     }
 
     async buscarPorId(id: any) {
-        return api.get<Livro>(`/${id}`);
+        return api.get<Livro>(`${this.contexto}/${id}`);
     }
 
     async adicionar(livro: Livro) {
-        return api.post("/", livro);
+        return api.post(this.contexto, livro);
     }
 
     async atualizar(id: any, livro: Livro) {
-        return api.put(`/${id}`, livro);
+        return api.put(`${this.contexto}/${id}`, livro);
     }
 
     async remover(id: any) {
-        return api.delete(`/${id}`);
+        return api.delete(`${this.contexto}/${id}`);
     }
 }
 
