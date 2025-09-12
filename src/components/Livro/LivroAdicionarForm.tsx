@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const LivroAdicionarForm = () => {
-    const { register, handleSubmit, reset } = useForm<Livro>({
+    const { register, handleSubmit, control, reset } = useForm<Livro>({
         defaultValues: { nu_preco: 0.00 }
     });
 
@@ -33,6 +33,7 @@ const LivroAdicionarForm = () => {
             <h2>Adicionar Livro</h2>
             <LivroFormularioPage
                 register={register}
+                control={control}
                 handleSubmit={handleSubmit(onSubmit)}
                 errors={errors}
             />

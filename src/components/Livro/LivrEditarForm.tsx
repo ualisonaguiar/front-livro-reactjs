@@ -9,7 +9,7 @@ import LivroService from "../../service/LivroService";
 
 const LivrEditarForm = () => {
 
-    const { register, handleSubmit, reset } = useForm<Livro>({
+    const { register, handleSubmit, control, reset } = useForm<Livro>({
         defaultValues: {
             id: 0,
             no_nome: "",
@@ -48,6 +48,7 @@ const LivrEditarForm = () => {
                 <h2>Editar Livro</h2>
                 <LivroFormularioPage
                     register={register}
+                    control={control}
                     handleSubmit={handleSubmit(onSubmit)}
                     errors={errors}
                 />

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://web-laravel/api/',
+    baseURL: 'http://localhost/api/',
     headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'

@@ -2,6 +2,7 @@ import { Table } from "react-bootstrap";
 import type { Livro } from "../../model/livro";
 import { Link } from "react-router-dom";
 import { BiPen, BiTrash } from "react-icons/bi";
+import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
 
 interface Props {
     livros: Livro[];
@@ -29,7 +30,7 @@ const LivroListagemPage = ({ livros, excluir }: Props) => {
                                 <td>{livro.no_nome}</td>
                                 <td>{livro.no_autor}</td>
                                 <td>{livro.nu_quantidade}</td>
-                                <td>{livro.nu_preco}</td>
+                                <td>{CurrencyUtils.formatarMoeda(livro.nu_preco)}</td>
                                 <td>{livro.dt_lancamento}</td>
                                 <td>
                                     <Link to={`/livro/edit/${livro.id}`}>
