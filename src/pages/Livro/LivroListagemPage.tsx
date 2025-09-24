@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap";
 import type { Livro } from "../../model/livro";
 import { Link } from "react-router-dom";
-import { BiPen, BiTrash } from "react-icons/bi";
+import { BiInfoCircle, BiPen, BiTrash } from "react-icons/bi";
 import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
 
 interface Props {
@@ -31,15 +31,24 @@ const LivroListagemPage = ({ livros, excluir }: Props) => {
                                 <td>{livro.no_autor}</td>
                                 <td>{livro.nu_quantidade}</td>
                                 <td>{CurrencyUtils.formatarMoeda(livro.nu_preco)}</td>
-                                <td>{livro.dt_lancamento}</td>
+                                <td>{new Date(livro.dt_lancamento).toLocaleDateString('pt-BR')}</td>
                                 <td>
                                     <Link to={`/livro/edit/${livro.id}`}>
                                         <BiPen>Editar</BiPen>
                                     </Link>
-                                    <BiTrash
+                                    <Link
+                                        to="#"
                                         title="Excluir"
-                                        onClick={() => excluir(livro)}
-                                    />
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            excluir(livro);
+                                        }}
+                                    >
+                                        <BiTrash />
+                                    </Link>
+                                    <Link to={`/livro/show/${livro.id}`}>
+                                        <BiInfoCircle>Editar</BiInfoCircle>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

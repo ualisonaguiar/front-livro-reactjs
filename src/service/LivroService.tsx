@@ -3,10 +3,10 @@ import api from "./api";
 
 class LivroService {
 
-    private contexto: string = "livros";
+    private contexto: string = 'livros';
 
-    async listagem() {
-        return api.get<Livro[]>(this.contexto);
+    async listagem(numeroPagina: number = 1) {
+        return api.get<Livro[]>(this.contexto + '?page=' + numeroPagina);
     }
 
     async buscarPorId(id: any) {

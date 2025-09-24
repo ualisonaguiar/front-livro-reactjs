@@ -5,19 +5,26 @@ import type { Livro } from "../../model/livro";
 import type { UseFormRegister, Control } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
+import ButtonVoltar from "../../components/Buttons/ButtonVoltar";
 
 interface Props {
     register: UseFormRegister<Livro>;
     control: Control<Livro>;
     handleSubmit: (e?: React.BaseSyntheticEvent) => void;
     errors?: { [key: string]: string[] };
+    disabledFields: boolean;
 }
 
-const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: Props) => {
+const LivroFormularioPage = ({ register, control, handleSubmit, errors = {}, disabledFields }: Props) => {
     return (
         <div className="main-form">
             <Form onSubmit={handleSubmit}>
-                <ButtonVoltarSalvar urlVoltar="/livro" />
+
+                {disabledFields ? (
+                    <ButtonVoltar urlVoltar="/livro" />
+                ) : (
+                    <ButtonVoltarSalvar urlVoltar="/livro" />
+                )}
 
                 <Form.Group controlId="bookname" className="mb-3">
                     <Form.Label>Nome do Livro</Form.Label>
@@ -25,6 +32,7 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: P
                         type="text"
                         placeholder="Digite o nome do livro"
                         {...register("no_nome", { required: true })}
+                        disabled={disabledFields}
                     />
                     {errors.no_nome?.map((error, index) => (
                         <MessageFormCampo key={index} message={error} />
@@ -37,6 +45,7 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: P
                         type="text"
                         placeholder="Digite o autor"
                         {...register("no_autor", { required: true })}
+                        disabled={disabledFields}
                     />
                     {errors.no_autor?.map((error, index) => (
                         <MessageFormCampo key={index} message={error} />
@@ -50,6 +59,7 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: P
                             <Form.Control
                                 type="number"
                                 {...register("nu_quantidade", { required: true })}
+                                disabled={disabledFields}
                             />
                             {errors.nu_quantidade?.map((error, index) => (
                                 <MessageFormCampo key={index} message={error} />
@@ -71,6 +81,7 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: P
                                             onChange(e.target.value.replace(/\D/g, ''));
                                         }}
                                         value={CurrencyUtils.formatarMoeda(value)}
+                                        disabled={disabledFields}
                                     />
                                     {errors.nu_preco?.map((error, index) => (
                                         <MessageFormCampo key={index} message={error} />
@@ -85,6 +96,7 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: P
                             <Form.Control
                                 type="date"
                                 {...register("dt_lancamento", { required: true })}
+                                disabled={disabledFields}
                             />
                             {errors.dt_lancamento?.map((error, index) => (
                                 <MessageFormCampo key={index} message={error} />
@@ -93,7 +105,11 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {} }: P
                     </Col>
                 </Row>
 
-                <ButtonVoltarSalvar urlVoltar="/livro" />
+                {disabledFields ? (
+                    <ButtonVoltar urlVoltar="/livro" />
+                ) : (
+                    <ButtonVoltarSalvar urlVoltar="/livro" />
+                )}
             </Form>
         </div>
     );

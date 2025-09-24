@@ -6,30 +6,25 @@ import LivroListagemPage from "../../pages/Livro/LivroListagemPage";
 import LivroService from "../../service/LivroService";
 import MessageConfirmacao from "../Messages/MessageConfirmacao";
 import { toast } from "react-toastify";
+import type { PaginacaoResponse } from "../Utils/Paginator/PaginacaoResponse";
+import PaginatorUtils from "../Utils/Paginator/PaginatorUtils";
 
 export default function LivroListagem() {
 
     const [livros, setLivros] = useState<Livro[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [livroSelecionado, setLivroSelecionado] = useState<Livro | null>(null);
+    const [paginator, setPaginator] = useState<PaginacaoResponse<Livro> | null>(null);
 
-    useEffect(() => {
-        carregarListagem();
-    }, []);
+    useEffect(() => { carregarListagem(1); }, []);
 
     const excluir = (livro: Livro) => {
         setLivroSelecionado(livro);
         setShowModal(true);
+    };
 
-        /*LivroService.remover(livro.id)
-            .then(response => {
-                if (response.status == 200) {
-                    alert("Livro excluído com sucesso");
-                    carregarListagem();
-                }
-            })
-            .catch(err => console.error("Erro: ", err));*/
-
+    const mudarPagina = (pagina: number) => {
+        carregarListagem(pagina);
     };
 
     const confirmarExclusao = () => {
@@ -42,6 +37,7 @@ export default function LivroListagem() {
                 carregarListagem();
             })
             .catch(err => {
+                console.error(err);
                 toast.error("Falha ao excluir o livro");
             })
             .finally(() => {
@@ -50,10 +46,11 @@ export default function LivroListagem() {
             });
     }
 
-    const carregarListagem = () => {
-        LivroService.listagem()
+    const carregarListagem = (numeroPagina: number = 1) => {
+        LivroService.listagem(numeroPagina)
             .then(response => {
-                setLivros([...response.data]);
+                setPaginator(response.data);
+                setLivros(response.data.data);
             })
             .catch(err => console.error("Erro: ", err));
     }
@@ -72,6 +69,12 @@ export default function LivroListagem() {
                 </div>
 
                 <LivroListagemPage livros={livros} excluir={excluir} />
+
+                <PaginatorUtils
+                    totalItens={paginator?.total}
+                    itensPorPagina={paginator?.per_page}
+                    functionCallBack={mudarPagina}
+                />
 
                 <MessageConfirmacao
                     show={showModal}
