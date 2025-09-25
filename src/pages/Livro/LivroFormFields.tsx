@@ -1,24 +1,12 @@
 // components/LivroFormFields.tsx
 import { Col, Form, Row } from "react-bootstrap";
-import { Controller, type Control, type UseFormRegister } from "react-hook-form";
-import type { Livro } from "../../model/livro";
-import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
+import { Controller } from "react-hook-form";
 import MessageFormCampo from "../../components/Messages/MessageFormCampo";
+import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
+import type { Livro } from "../../model/livro";
+import type { FormProps } from "../../types/form-props";
 
-interface Props {
-    register: UseFormRegister<Livro>;
-    control: Control<Livro>;
-    errors?: { [key: string]: string[] };
-    disabledFields?: boolean;
-    action?: "pesquisa" | "cadastro" | "edicao" | "visualizacao";
-}
-
-const LivroFormFields = ({
-    register,
-    control,
-    errors = {},
-    action = "cadastro",
-}: Props) => {
+const LivroFormFields = ({ register, control, errors = {}, action = "cadastro" }: FormProps<Livro>) => {
 
     const disabledFields: boolean = action == 'visualizacao';
 

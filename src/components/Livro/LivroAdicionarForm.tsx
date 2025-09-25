@@ -31,13 +31,12 @@ const LivroAdicionarForm = () => {
     return (
         <div>
             <h2>Adicionar Livro</h2>
-
             <LivroFormularioPage
                 register={register}
                 control={control}
                 handleSubmit={handleSubmit(onSubmit)}
                 errors={errors}
-                modo="cadastro"
+                action="cadastro"
             />
         </div>
     );

@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import type { Livro } from "../../model/livro";
+import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
 import LivroListagemPage from "../../pages/Livro/LivroListagemPage";
 import LivroService from "../../service/LivroService";
+import ButtonAdicionar from "../Buttons/ButtonAdicionar";
 import MessageConfirmacao from "../Messages/MessageConfirmacao";
-import { toast } from "react-toastify";
 import type { PaginacaoResponse } from "../Utils/Paginator/PaginacaoResponse";
 import PaginatorUtils from "../Utils/Paginator/PaginatorUtils";
-import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
-import { useForm } from "react-hook-form";
-import ButtonAdicionar from "../Buttons/ButtonAdicionar";
 
 export default function LivroListagem() {
 
@@ -18,6 +16,7 @@ export default function LivroListagem() {
     const [showModal, setShowModal] = useState(false);
     const [livroSelecionado, setLivroSelecionado] = useState<Livro | null>(null);
     const [paginator, setPaginator] = useState<PaginacaoResponse<Livro> | null>(null);
+    const [filtros, setFiltros] = useState<Partial<Livro>>({});
 
     useEffect(() => { carregarListagem(1); }, []);
 
@@ -27,7 +26,7 @@ export default function LivroListagem() {
     };
 
     const mudarPagina = (pagina: number) => {
-        carregarListagem(pagina);
+        carregarListagem(pagina, filtros);
     };
 
     const confirmarExclusao = () => {
@@ -49,8 +48,8 @@ export default function LivroListagem() {
             });
     }
 
-    const carregarListagem = (numeroPagina: number = 1) => {
-        LivroService.listagem(numeroPagina)
+    const carregarListagem = (numeroPagina: number = 1, filtros: Record<string, any> = {}) => {
+        LivroService.listagem(numeroPagina, filtros)
             .then(response => {
                 setPaginator(response.data);
                 setLivros(response.data.data);
@@ -61,7 +60,8 @@ export default function LivroListagem() {
     const { register, handleSubmit, control, reset } = useForm<Livro>({});
 
     const onSubmit = (data: Livro) => {
-        console.log(data);
+        carregarListagem(1, data);
+        setFiltros(data);
     };
 
 
