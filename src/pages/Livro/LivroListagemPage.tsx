@@ -12,49 +12,51 @@ interface Props {
 const LivroListagemPage = ({ livros, excluir }: Props) => {
     return (
         <>
-            <div>
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Autor</th>
-                            <th>Quantidade</th>
-                            <th>Preço</th>
-                            <th>Data de Lançamento</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {livros.map(livro => (
-                            <tr key={livro.id}>
-                                <td>{livro.no_nome}</td>
-                                <td>{livro.no_autor}</td>
-                                <td>{livro.nu_quantidade}</td>
-                                <td>{CurrencyUtils.formatarMoeda(livro.nu_preco)}</td>
-                                <td>{new Date(livro.dt_lancamento).toLocaleDateString('pt-BR')}</td>
-                                <td>
-                                    <Link to={`/livro/edit/${livro.id}`}>
-                                        <BiPen>Editar</BiPen>
-                                    </Link>
-                                    <Link
-                                        to="#"
-                                        title="Excluir"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            excluir(livro);
-                                        }}
-                                    >
-                                        <BiTrash />
-                                    </Link>
-                                    <Link to={`/livro/show/${livro.id}`}>
-                                        <BiInfoCircle>Editar</BiInfoCircle>
-                                    </Link>
-                                </td>
+            <fieldset className="border p-2">
+                <div>
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Autor</th>
+                                <th>Quantidade</th>
+                                <th>Preço</th>
+                                <th>Data de Lançamento</th>
+                                <th>Ação</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </div>
+                        </thead>
+                        <tbody>
+                            {livros.map(livro => (
+                                <tr key={livro.id}>
+                                    <td>{livro.no_nome}</td>
+                                    <td>{livro.no_autor}</td>
+                                    <td>{livro.nu_quantidade}</td>
+                                    <td>{CurrencyUtils.formatarMoeda(livro.nu_preco)}</td>
+                                    <td>{new Date(livro.dt_lancamento).toLocaleDateString('pt-BR')}</td>
+                                    <td>
+                                        <Link to={`/livro/edit/${livro.id}`}>
+                                            <BiPen>Editar</BiPen>
+                                        </Link>
+                                        <Link
+                                            to="#"
+                                            title="Excluir"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                excluir(livro);
+                                            }}
+                                        >
+                                            <BiTrash />
+                                        </Link>
+                                        <Link to={`/livro/show/${livro.id}`}>
+                                            <BiInfoCircle>Editar</BiInfoCircle>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </div>
+            </fieldset>
         </>
     );
 }

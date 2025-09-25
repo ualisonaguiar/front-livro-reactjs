@@ -9,7 +9,7 @@ class LivroService {
         return api.get<Livro[]>(this.contexto + '?page=' + numeroPagina);
     }
 
-    async buscarPorId(id: any) {
+    async buscarPorId(id: number) {
         return api.get<Livro>(`${this.contexto}/${id}`);
     }
 
@@ -17,11 +17,11 @@ class LivroService {
         return api.post(this.contexto, livro);
     }
 
-    async atualizar(id: any, livro: Livro) {
+    async atualizar(id: number, livro: Livro) {
         return api.put(`${this.contexto}/${id}`, livro);
     }
 
-    async remover(id: any) {
+    async remover(id: number) {
         return api.delete(`${this.contexto}/${id}`);
     }
 }

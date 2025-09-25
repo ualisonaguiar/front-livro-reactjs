@@ -7,7 +7,7 @@ import type { Livro } from "../../model/livro";
 import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
 import LivroService from "../../service/LivroService";
 
-const LivrViewForm = () => {
+const LivroViewForm = () => {
 
     const { register, handleSubmit, control, reset } = useForm<Livro>({
         defaultValues: {
@@ -51,11 +51,11 @@ const LivrViewForm = () => {
                     control={control}
                     handleSubmit={handleSubmit(onSubmit)}
                     errors={errors}
-                    disabledFields={true}
+                    action="visualizacao"
                 />
             </div>
         </>
     )
 };
 
-export default LivrViewForm;
+export default LivroViewForm;

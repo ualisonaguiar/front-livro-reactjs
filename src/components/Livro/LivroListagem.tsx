@@ -8,6 +8,9 @@ import MessageConfirmacao from "../Messages/MessageConfirmacao";
 import { toast } from "react-toastify";
 import type { PaginacaoResponse } from "../Utils/Paginator/PaginacaoResponse";
 import PaginatorUtils from "../Utils/Paginator/PaginatorUtils";
+import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
+import { useForm } from "react-hook-form";
+import ButtonAdicionar from "../Buttons/ButtonAdicionar";
 
 export default function LivroListagem() {
 
@@ -55,26 +58,43 @@ export default function LivroListagem() {
             .catch(err => console.error("Erro: ", err));
     }
 
+    const { register, handleSubmit, control, reset } = useForm<Livro>({});
+
+    const onSubmit = (data: Livro) => {
+        console.log(data);
+    };
+
+
     return (
         <>
-            <div>
-                <h2>Listagem de Livros</h2>
+            <main className="container">
+                <header className="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Listagem de Livros</h2>
+                    <ButtonAdicionar url="/livro/add" />
+                </header>
 
-                <div className="d-flex justify-content-end">
-                    <Link to="/livro/add">
-                        <Button type="button" variant="primary">
-                            Adicionar
-                        </Button>
-                    </Link>
-                </div>
 
-                <LivroListagemPage livros={livros} excluir={excluir} />
+                <section className="mb-4">
+                    <LivroFormularioPage
+                        register={register}
+                        control={control}
+                        handleSubmit={handleSubmit(onSubmit)}
+                        action="pesquisa"
+                        reset={reset}
+                    />
+                </section>
 
-                <PaginatorUtils
-                    totalItens={paginator?.total}
-                    itensPorPagina={paginator?.per_page}
-                    functionCallBack={mudarPagina}
-                />
+                <section className="mb-4">
+                    <LivroListagemPage livros={livros} excluir={excluir} />
+                </section>
+
+                <section className="mb-4">
+                    <PaginatorUtils
+                        totalItens={paginator?.total}
+                        itensPorPagina={paginator?.per_page}
+                        functionCallBack={mudarPagina}
+                    />
+                </section>
 
                 <MessageConfirmacao
                     show={showModal}
@@ -83,7 +103,7 @@ export default function LivroListagem() {
                     title="Confirmação de Exclusão"
                     message={`Deseja realmente excluir o livro "${livroSelecionado?.no_nome}"?`}
                 />
-            </div>
+            </main>
         </>
     );
 }

@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LivrEditarForm from '../components/Livro/LivrEditarForm';
 import LivroAdicionarForm from '../components/Livro/LivroAdicionarForm';
 import LivroListagem from '../components/Livro/LivroListagem';
-import LivrViewForm from '../components/Livro/LivrViewForm';
+import LivroViewForm from '../components/Livro/LivroViewForm';
 
 export function AppRouter() {
     return (
@@ -13,7 +13,7 @@ export function AppRouter() {
                         <Route path='/livro' element={<LivroListagem />} />
                         <Route path='/livro/add' element={<LivroAdicionarForm />} />
                         <Route path='/livro/edit/:id' element={<LivrEditarForm />} />
-                        <Route path='/livro/show/:id' element={<LivrViewForm />} />
+                        <Route path='/livro/show/:id' element={<LivroViewForm />} />
                     </Routes>
                 </div>
             </BrowserRouter>

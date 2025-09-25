@@ -2,18 +2,18 @@ import { useState } from "react";
 import { Pagination } from "react-bootstrap";
 
 interface Props {
-    totalItens: number;
-    itensPorPagina: number;
+    totalItens?: number;
+    itensPorPagina?: number;
     functionCallBack: (pagina: number) => void;
 }
 
-const PaginatorUtils = ({ totalItens, itensPorPagina, functionCallBack }: Props) => {
+const PaginatorUtils = ({ totalItens = 0, itensPorPagina = 20, functionCallBack }: Props) => {
 
     const [paginaAtual, setPaginaAtual] = useState(1);
 
     const totalPaginas = Math.ceil(totalItens / itensPorPagina);
 
-    const mudarPagina = (numeroPagina) => {
+    const mudarPagina = (numeroPagina = 1) => {
         setPaginaAtual(numeroPagina);
         functionCallBack(numeroPagina);
     };

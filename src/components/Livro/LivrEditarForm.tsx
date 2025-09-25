@@ -51,7 +51,7 @@ const LivrEditarForm = () => {
                     control={control}
                     handleSubmit={handleSubmit(onSubmit)}
                     errors={errors}
-                    disabledFields={false}
+                    action="edicao"
                 />
             </div>
         </>
