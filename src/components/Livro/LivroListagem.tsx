@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import type { Livro } from "../../model/livro";
+import type { Livro } from "../../model/Livro";
 import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
 import LivroListagemPage from "../../pages/Livro/LivroListagemPage";
 import LivroService from "../../service/LivroService";
@@ -38,8 +38,8 @@ export default function LivroListagem() {
                 toast.success("Livro excluído com sucesso!");
                 carregarListagem();
             })
-            .catch(err => {
-                console.error(err);
+            .catch(error => {
+                console.error(error);
                 toast.error("Falha ao excluir o livro");
             })
             .finally(() => {
@@ -90,8 +90,7 @@ export default function LivroListagem() {
 
                 <section className="mb-4">
                     <PaginatorUtils
-                        totalItens={paginator?.total}
-                        itensPorPagina={paginator?.per_page}
+                        paginator={paginator}
                         functionCallBack={mudarPagina}
                     />
                 </section>

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { Livro } from "../../model/livro";
+import type { Livro } from "../../model/Livro";
 import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
 import LivroService from "../../service/LivroService";
 import { toast } from "react-toastify";

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import type { Livro } from "../../model/livro";
+import type { Livro } from "../../model/Livro";
 import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
 import LivroService from "../../service/LivroService";
 

@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import type { UseFormReset } from "react-hook-form";
-import type { Livro } from "../../model/livro";
+import type { Livro } from "../../model/Livro";
 
 interface Props {
     reset?: UseFormReset<Livro>;

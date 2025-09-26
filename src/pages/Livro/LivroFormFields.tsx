@@ -3,7 +3,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import MessageFormCampo from "../../components/Messages/MessageFormCampo";
 import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
-import type { Livro } from "../../model/livro";
+import type { Livro } from "../../model/Livro";
 import type { FormProps } from "../../types/form-props";
 
 const LivroFormFields = ({ register, control, errors = {}, action = "cadastro" }: FormProps<Livro>) => {

@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
 import type { Control, UseFormRegister, UseFormReset } from "react-hook-form";
 import LivroFormButtons from "../../components/Livro/LivroFormButtons";
-import type { Livro } from "../../model/livro";
+import type { Livro } from "../../model/Livro";
 import LivroFormFields from "./LivroFormFields";
 
 interface Props {

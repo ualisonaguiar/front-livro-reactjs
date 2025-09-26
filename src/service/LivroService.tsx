@@ -1,5 +1,5 @@
 import { buildQueryParams } from "../components/Utils/Paginator/queryParamsUtils";
-import type { Livro } from "../model/livro";
+import type { Livro } from "../model/Livro";
 import api from "./api";
 
 class LivroService {
