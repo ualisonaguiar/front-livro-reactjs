@@ -3,6 +3,7 @@ import type { Control, UseFormRegister, UseFormReset } from "react-hook-form";
 import LivroFormButtons from "../../components/Livro/LivroFormButtons";
 import type { Livro } from "../../model/Livro";
 import LivroFormFields from "./LivroFormFields";
+import FormButtons from "../../components/form/FormButtons";
 
 interface Props {
     register: UseFormRegister<Livro>;
@@ -24,7 +25,7 @@ const LivroFormularioPage = ({ register, control, handleSubmit, errors = {}, act
                     action={action}
                 />
                 <br />
-                <LivroFormButtons action={action} reset={reset} />
+                <FormButtons action={action} reset={reset} urlVoltar="/livro" />
                 <br />
             </Form>
         </div>

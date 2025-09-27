@@ -5,6 +5,7 @@ import MessageFormCampo from "../../components/Messages/MessageFormCampo";
 import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
 import type { Livro } from "../../model/Livro";
 import type { FormProps } from "../../types/form-props";
+import { PrecoInputForm } from "../../components/form/PrecoInputForm";
 
 const LivroFormFields = ({ register, control, errors = {}, action = "cadastro" }: FormProps<Livro>) => {
 
@@ -55,27 +56,12 @@ const LivroFormFields = ({ register, control, errors = {}, action = "cadastro" }
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Controller
-                                name="nu_preco"
+                            <PrecoInputForm
                                 control={control}
-                                rules={{ required: true }}
-                                render={({ field: { onChange, value } }) => (
-                                    <Form.Group controlId="price">
-                                        <Form.Label>Preço</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="R$ 0,00"
-                                            onChange={(e) =>
-                                                onChange(e.target.value.replace(/\D/g, ""))
-                                            }
-                                            value={CurrencyUtils.formatarMoeda(value)}
-                                            disabled={disabledFields}
-                                        />
-                                        {errors.nu_preco?.map((error, index) => (
-                                            <MessageFormCampo key={index} message={error} />
-                                        ))}
-                                    </Form.Group>
-                                )}
+                                name="nu_preco"
+                                disabled={disabledFields}
+                                label="Preço"
+                                errors={errors}
                             />
                         </Col>
                         <Col>
