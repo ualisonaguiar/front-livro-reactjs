@@ -68,11 +68,11 @@ export default function LivroListagem() {
     return (
         <>
             <main className="container">
+                <br />
                 <header className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Listagem de Livros</h2>
                     <ButtonAdicionar url="/livro/add" />
                 </header>
-
 
                 <section className="mb-4">
                     <LivroFormularioPage

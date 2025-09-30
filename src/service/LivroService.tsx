@@ -10,23 +10,33 @@ class LivroService {
 
         const query = buildQueryParams(numeroPagina, filtros);
 
-        return api.get<Livro[]>(`${this.contexto}?${query}`);
+        console.log(this.getRequiredAuth());
+
+        return api.get<Livro[]>(`${this.contexto}?${query}`, this.getRequiredAuth());
     }
 
     async buscarPorId(id: number) {
-        return api.get<Livro>(`${this.contexto}/${id}`);
+        return api.get<Livro>(`${this.contexto}/${id}`, this.getRequiredAuth());
     }
 
     async adicionar(livro: Livro) {
-        return api.post(this.contexto, livro);
+        return api.post(this.contexto, livro, this.getRequiredAuth());
     }
 
     async atualizar(id: number, livro: Livro) {
-        return api.put(`${this.contexto}/${id}`, livro);
+        return api.put(`${this.contexto}/${id}`, livro, this.getRequiredAuth());
     }
 
     async remover(id: number) {
-        return api.delete(`${this.contexto}/${id}`);
+        return api.delete(`${this.contexto}/${id}`, this.getRequiredAuth());
+    }
+
+    getRequiredAuth() {
+        return {
+            headers: {
+                requiresAuth: true
+            }
+        };
     }
 }
 

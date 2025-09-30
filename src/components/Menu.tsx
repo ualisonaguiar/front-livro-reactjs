@@ -1,9 +1,16 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useContext } from "react";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { AuthContext } from "./Authenticator/AuthContext";
 
 export function Menu() {
+    const { user, logout } = useContext(AuthContext);
+
+    if (!user)
+        return null;
+
     return (
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
@@ -12,8 +19,6 @@ export function Menu() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/inicio">Inicio</Nav.Link>
-
-                        <Nav.Link href="/login">Login</Nav.Link>
                         <NavDropdown title="Livro" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/livro">Listagem</NavDropdown.Item>
                             <NavDropdown.Item href="/venda">Venda</NavDropdown.Item>
@@ -21,14 +26,8 @@ export function Menu() {
                     </Nav>
 
                     <Nav>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown-autenticacao">
-                            <NavDropdown.Item href="#">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#">Sair</NavDropdown.Item>
+                        <NavDropdown title={user.ds_nome} id="basic-nav-dropdown-autenticacao">
+                            <NavDropdown.Item onClick={logout}>Sair</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
