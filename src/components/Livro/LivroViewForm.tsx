@@ -45,13 +45,13 @@ const LivroViewForm = () => {
     return (
         <>
             <div>
-                <h2>Visualizar Livro</h2>
                 <LivroFormularioPage
                     register={register}
                     control={control}
                     handleSubmit={handleSubmit(onSubmit)}
                     errors={errors}
                     action="visualizacao"
+                    title="Visualizar Livro"
                 />
             </div>
         </>

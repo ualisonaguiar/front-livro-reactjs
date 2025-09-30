@@ -11,23 +11,30 @@ interface Props {
     errors?: { [key: string]: string[] };
     action?: "pesquisa" | "cadastro" | "edicao" | "visualizacao";
     reset?: UseFormReset<Livro>;
+    title: string;
 }
 
-const LivroFormularioPage = ({ register, control, handleSubmit, errors = {}, action, reset }: Props) => {
+const LivroFormularioPage = ({ register, control, handleSubmit, errors = {}, action, reset, title }: Props) => {
     return (
-        <div className="main-form">
-            <Form onSubmit={handleSubmit}>
-                <LivroFormFields
-                    register={register}
-                    control={control}
-                    errors={errors}
-                    action={action}
-                />
-                <br />
-                <FormButtons action={action} reset={reset} urlVoltar="/livro" />
-                <br />
-            </Form>
-        </div>
+        <main className="container">
+            <br />
+            <section className="mb-4">
+                <h2>{title}</h2>
+            </section>
+
+            <section className="mb-4">
+                <Form onSubmit={handleSubmit}>
+                    <LivroFormFields
+                        register={register}
+                        control={control}
+                        errors={errors}
+                        action={action}
+                    />
+                    <br />
+                    <FormButtons action={action} reset={reset} urlVoltar="/livro" />
+                </Form>
+            </section>
+        </main>
     );
 };
 

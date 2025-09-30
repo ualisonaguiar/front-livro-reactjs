@@ -45,13 +45,13 @@ const LivrEditarForm = () => {
     return (
         <>
             <div>
-                <h2>Editar Livro</h2>
                 <LivroFormularioPage
                     register={register}
                     control={control}
                     handleSubmit={handleSubmit(onSubmit)}
                     errors={errors}
                     action="edicao"
+                    title="Editar Livro"
                 />
             </div>
         </>

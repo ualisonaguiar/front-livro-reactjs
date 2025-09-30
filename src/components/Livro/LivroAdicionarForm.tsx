@@ -29,14 +29,14 @@ const LivroAdicionarForm = () => {
     };
 
     return (
-        <div>
-            <h2>Adicionar Livro</h2>
+        <div>            
             <LivroFormularioPage
                 register={register}
                 control={control}
                 handleSubmit={handleSubmit(onSubmit)}
                 errors={errors}
                 action="cadastro"
+                title="Adicionar Livro"
             />
         </div>
     );

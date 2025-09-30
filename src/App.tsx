@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { Footer } from './components/Footer';
-import { Menu } from './components/Menu';
-import { AppRouter } from './router/AppRouter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Footer } from './components/Footer';
+import { Menu } from './components/Menu';
 import StatusComponent from './components/StatusComponent';
+import { AppRouter } from './router/AppRouter';
 
 function App() {
 
@@ -16,11 +16,10 @@ function App() {
   return (
     <>
       <Menu />
-      <br />
-      <div className='container'>
+      <div className="main-content">
         <AppRouter />
+        <Footer />
       </div>
-      <Footer />
 
       <ToastContainer
         position="top-right"
