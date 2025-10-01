@@ -16,6 +16,7 @@ function App() {
   return (
     <>
       <Menu />
+      <br />
       <div className="main-content">
         <AppRouter />
         <Footer />

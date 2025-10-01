@@ -1,6 +1,6 @@
 import { buildQueryParams } from "../components/Utils/Paginator/queryParamsUtils";
 import type { Venda } from "../model/Venda";
-import api from "./api";
+import api, { getRequiredAuth } from "./api";
 
 class VendaService {
 
@@ -10,7 +10,7 @@ class VendaService {
 
         const query = buildQueryParams(numeroPagina, filtros);
 
-        return api.get<Venda[]>(`${this.contexto}?${query}`);
+        return api.get<Venda[]>(`${this.contexto}?${query}`, getRequiredAuth());
     }
 
 }

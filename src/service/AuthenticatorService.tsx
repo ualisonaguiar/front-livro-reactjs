@@ -45,11 +45,12 @@ class AuthenticatorService {
     async fazerLogoff() {
         try {
             const response = await this.logoff();
-            localStorage.removeItem('token');
             return response;
         } catch (error) {
             console.error('Erro ao fazer logoff:', error);
             throw error;
+        } finally {
+            localStorage.removeItem(this.TOKEN_KEY);
         }
     }
 

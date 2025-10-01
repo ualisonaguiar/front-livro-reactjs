@@ -26,31 +26,29 @@ export default function VendaListagem() {
             })
             .catch(error => {
                 console.error(error);
-                toast.error("Falha ao excluir o livro");
+                toast.error("Falha ao carregar a listagem");
             });
     }
 
     useEffect(() => { carregarListagem(1); }, []);
 
     return (
-        <>
-            <main className="container">
-                <header className="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Listagem das Venda</h2>
-                    <ButtonAdicionar url="/venda/add" />
-                </header>
+        <main className="container">
+            <header className="d-flex justify-content-between align-items-center mb-4">
+                <h2>Listagem das Venda</h2>
+                <ButtonAdicionar url="/venda/add" />
+            </header>
 
-                <section className="mb-4">
-                    <VendaListagemPage vendas={vendas} />
-                </section>
+            <section className="mb-4">
+                <VendaListagemPage vendas={vendas} />
+            </section>
 
-                <section className="mb-4">
-                    <PaginatorUtils
-                        paginator={paginator}
-                        functionCallBack={mudarPagina}
-                    />
-                </section>
-            </main>
-        </>
+            <section className="mb-4">
+                <PaginatorUtils
+                    paginator={paginator}
+                    functionCallBack={mudarPagina}
+                />
+            </section>
+        </main>
     );
 }

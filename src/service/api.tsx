@@ -20,4 +20,12 @@ api.interceptors.request.use(config => {
     return config;
 });
 
+export function getRequiredAuth() {
+    return {
+        headers: {
+            requiresAuth: true
+        }
+    };
+}
+
 export default api;

@@ -54,7 +54,7 @@ export default function LivroListagem() {
                 setPaginator(response.data);
                 setLivros(response.data.data);
             })
-            .catch(err => console.error("Erro: ", err));
+            .catch(err => toast.error("Erro: ", err));
     }
 
     const { register, handleSubmit, control, reset } = useForm<Livro>({});
@@ -68,7 +68,6 @@ export default function LivroListagem() {
     return (
         <>
             <main className="container">
-                <br />
                 <header className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Listagem de Livros</h2>
                     <ButtonAdicionar url="/livro/add" />

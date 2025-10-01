@@ -1,6 +1,6 @@
 import { buildQueryParams } from "../components/Utils/Paginator/queryParamsUtils";
 import type { Livro } from "../model/Livro";
-import api from "./api";
+import api, { getRequiredAuth } from "./api";
 
 class LivroService {
 
@@ -10,33 +10,23 @@ class LivroService {
 
         const query = buildQueryParams(numeroPagina, filtros);
 
-        console.log(this.getRequiredAuth());
-
-        return api.get<Livro[]>(`${this.contexto}?${query}`, this.getRequiredAuth());
+        return api.get<Livro[]>(`${this.contexto}?${query}`, getRequiredAuth());
     }
 
     async buscarPorId(id: number) {
-        return api.get<Livro>(`${this.contexto}/${id}`, this.getRequiredAuth());
+        return api.get<Livro>(`${this.contexto}/${id}`, getRequiredAuth());
     }
 
     async adicionar(livro: Livro) {
-        return api.post(this.contexto, livro, this.getRequiredAuth());
+        return api.post(this.contexto, livro, getRequiredAuth());
     }
 
     async atualizar(id: number, livro: Livro) {
-        return api.put(`${this.contexto}/${id}`, livro, this.getRequiredAuth());
+        return api.put(`${this.contexto}/${id}`, livro, getRequiredAuth());
     }
 
     async remover(id: number) {
-        return api.delete(`${this.contexto}/${id}`, this.getRequiredAuth());
-    }
-
-    getRequiredAuth() {
-        return {
-            headers: {
-                requiresAuth: true
-            }
-        };
+        return api.delete(`${this.contexto}/${id}`, getRequiredAuth());
     }
 }
 

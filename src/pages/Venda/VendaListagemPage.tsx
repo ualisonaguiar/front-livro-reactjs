@@ -17,7 +17,7 @@ const VendaListagemPage = ({ vendas }: Props) => {
                     <thead>
                         <tr>
                             <th>CPF</th>
-                            <th>Título Livro</th>
+                            <th>Livro</th>
                             <th>Quantidade</th>
                             <th>Total</th>
                             <th>Ação</th>
