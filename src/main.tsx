@@ -3,6 +3,8 @@ import App from './App.tsx';
 import './index.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 import { AuthProvider } from './components/Authenticator/AuthContext.tsx';
 import { BrowserRouter } from 'react-router-dom';
 

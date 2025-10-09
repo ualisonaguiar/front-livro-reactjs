@@ -66,7 +66,6 @@ const LivroFormFields = ({
                 )}
             </Row>
 
-
             <Row className="mb-3">
                 {isVisible("nu_quantidade") && (
                     <Col>
