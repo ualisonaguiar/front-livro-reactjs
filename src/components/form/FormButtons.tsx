@@ -7,10 +7,10 @@ import type { Livro } from "../../model/Livro";
 interface ButtonProps {
     action?: "pesquisa" | "cadastro" | "edicao" | "visualizacao";
     reset?: UseFormReset<Livro>;
-    urlVoltar: string;
+    urlVoltar?: string;
 }
 
-const FormButtons = ({ action, reset, urlVoltar }: ButtonProps) => {
+const FormButtons = ({ action, reset, urlVoltar = '' }: ButtonProps) => {
 
     if (action === 'pesquisa') {
         return <ButtonPesquisarLimpar reset={reset} />;

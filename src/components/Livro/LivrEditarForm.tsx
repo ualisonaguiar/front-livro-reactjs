@@ -4,30 +4,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import type { Livro } from "../../model/Livro";
-import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
+import LivroFormularioPage from "../../pages/Livro/___LivroFormularioPage";
 import LivroService from "../../service/LivroService";
+import { Form } from "react-bootstrap";
+import LivroFormFields from "../../pages/Livro/LivroFormFields";
+import FormButtons from "../form/FormButtons";
 
 const LivrEditarForm = () => {
 
-    const { register, handleSubmit, control, reset } = useForm<Livro>({
-        defaultValues: {
-            id: 0,
-            no_nome: "",
-            no_autor: "",
-            nu_quantidade: 0,
-            nu_preco: 0,
-            dt_lancamento: "",
-        },
-    });
-
-    const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
-
     const { id } = useParams();
+    const { register, handleSubmit, control, reset } = useForm<Livro>();
+    const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
     const navigate = useNavigate();
 
     const onSubmit = (data: Livro) => {
         LivroService.atualizar(id, data).then(
-            response => {
+            () => {
                 toast.success("Livro alterado com sucesso!");
                 navigate("/livro");
             },
@@ -43,18 +35,22 @@ const LivrEditarForm = () => {
     }, [id]);
 
     return (
-        <>
-            <div>
-                <LivroFormularioPage
-                    register={register}
-                    control={control}
-                    handleSubmit={handleSubmit(onSubmit)}
-                    errors={errors}
-                    action="edicao"
-                    title="Editar Livro"
-                />
-            </div>
-        </>
+        <main className="container">
+            <section className="mb-4">
+                <h2>Editar Livro</h2>
+            </section>
+
+            <section className="mb-4">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <LivroFormFields
+                        register={register}
+                        control={control}
+                        action='cadastro'
+                    />
+                    <FormButtons action='edicao' reset={reset} urlVoltar="/livro" />
+                </Form>
+            </section>
+        </main>
     )
 };
 

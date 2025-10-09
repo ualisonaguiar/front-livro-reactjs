@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import ButtonAdicionar from "../Buttons/ButtonAdicionar";
-import type { Venda } from "../../model/Venda";
-import VendaService from "../../service/VendaService";
 import { toast } from "react-toastify";
-import type { PaginacaoResponse } from "../Utils/Paginator/PaginacaoResponse";
+import type { Venda } from "../../model/Venda";
 import VendaListagemPage from "../../pages/Venda/VendaListagemPage";
+import VendaService from "../../service/VendaService";
+import ButtonAdicionar from "../Buttons/ButtonAdicionar";
+import type { PaginacaoResponse } from "../Utils/Paginator/PaginacaoResponse";
 import PaginatorUtils from "../Utils/Paginator/PaginatorUtils";
 
 export default function VendaListagem() {

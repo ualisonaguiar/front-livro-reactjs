@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import type { Livro } from "../../model/Livro";
-import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
+import LivroFormularioPage from "../../pages/Livro/___LivroFormularioPage";
 import LivroService from "../../service/LivroService";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Form } from "react-bootstrap";
+import LivroFormFields from "../../pages/Livro/LivroFormFields";
+import FormButtons from "../form/FormButtons";
 
 const LivroAdicionarForm = () => {
-    const { register, handleSubmit, control, reset } = useForm<Livro>({
-        defaultValues: { nu_preco: 0.00 }
-    });
-
+    const { register, handleSubmit, control, reset } = useForm<Livro>();
     const [errors, setErrors] = useState<{ [key: string]: string[] }>();
     const navigate = useNavigate();
 
@@ -29,16 +29,22 @@ const LivroAdicionarForm = () => {
     };
 
     return (
-        <div>            
-            <LivroFormularioPage
-                register={register}
-                control={control}
-                handleSubmit={handleSubmit(onSubmit)}
-                errors={errors}
-                action="cadastro"
-                title="Adicionar Livro"
-            />
-        </div>
+        <main className="container">
+            <section className="mb-4">
+                <h2>Adicionar Livro</h2>
+            </section>
+
+            <section className="mb-4">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <LivroFormFields
+                        register={register}
+                        control={control}
+                        action='cadastro'
+                    />
+                    <FormButtons action='cadastro' reset={reset} urlVoltar="/livro" />
+                </Form>
+            </section>
+        </main>
     );
 };
 

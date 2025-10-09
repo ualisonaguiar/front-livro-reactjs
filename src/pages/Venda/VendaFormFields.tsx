@@ -7,7 +7,7 @@ import type { Venda } from "../../model/Venda";
 import LivroService from "../../service/LivroService";
 import type { FormProps } from "../../types/form-props";
 import { useForm } from "react-hook-form";
-import { PrecoInputForm } from "../../components/form/PrecoInputForm";
+import LivroFormFields from "../Livro/LivroFormFields";
 
 export default function VendaFormFields({ errors = {}, action = 'cadastro' }: FormProps<Venda>) {
 
@@ -33,12 +33,14 @@ export default function VendaFormFields({ errors = {}, action = 'cadastro' }: Fo
 
         if (livro) {
             setValue("livro.nu_quantidade", livro.nu_quantidade);
-            setValue("livro.no_nome", livro.no_autor);
+            setValue("livro.no_autor", livro.no_autor);
             setValue("livro.nu_preco", livro.nu_preco);
+            setValue("livro.dt_lancamento", livro.dt_lancamento);
         } else {
             setValue("livro.nu_quantidade", 0);
-            setValue("livro.no_nome", "");
+            setValue("livro.no_autor", '');
             setValue("livro.nu_preco", 0);
+            setValue("livro.dt_lancamento", '');
         }
     };
 
@@ -54,42 +56,19 @@ export default function VendaFormFields({ errors = {}, action = 'cadastro' }: Fo
                                 <option key={livro.id} value={livro.id}>{livro.no_nome}</option>
                             ))}
                         </Form.Select>
-
-                        {errors.livro.id?.map((error, index) => (
-                            <MessageFormCampo key={index} message={error} />
-                        ))}
                     </Col>
+                </Row>
 
-                    <Col>
-                        <Form.Group controlId="autor">
-                            <Form.Label>Autor</Form.Label>
-                            <Form.Control
-                                type="text"
-                                {...register('livro.no_nome')}
-                                disabled
-                            />
-                        </Form.Group>
-                    </Col>
-
-                    <Col>
-                        <Form.Group controlId="quantity">
-                            <Form.Label>Quantidade Disponível</Form.Label>
-                            <Form.Control
-                                type="number"
-                                {...register("livro.nu_quantidade")}
-                                disabled
-                            />
-                        </Form.Group>
-                    </Col>
-
-                    <Col>
-                        <PrecoInputForm
+                <Row className="mb-4">
+                    <fieldset className="border p-2">
+                        <LivroFormFields
+                            register={register}
                             control={control}
-                            name="livro.nu_preco"
-                            disabled
-                            label="Preço Unitário"
+                            errors={errors?.livro || {}}
+                            action='visualizacao'
+                            namePrefix="livro."
                         />
-                    </Col>
+                    </fieldset>
                 </Row>
             </Form.Group>
             <Row className="mb-3"></Row>

@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import type { Livro } from "../../model/Livro";
-import LivroFormularioPage from "../../pages/Livro/LivroFormularioPage";
+import LivroFormFields from "../../pages/Livro/LivroFormFields";
 import LivroListagemPage from "../../pages/Livro/LivroListagemPage";
 import LivroService from "../../service/LivroService";
 import ButtonAdicionar from "../Buttons/ButtonAdicionar";
+import FormButtons from "../form/FormButtons";
 import MessageConfirmacao from "../Messages/MessageConfirmacao";
 import type { PaginacaoResponse } from "../Utils/Paginator/PaginacaoResponse";
 import PaginatorUtils from "../Utils/Paginator/PaginatorUtils";
@@ -17,23 +19,18 @@ export default function LivroListagem() {
     const [livroSelecionado, setLivroSelecionado] = useState<Livro | null>(null);
     const [paginator, setPaginator] = useState<PaginacaoResponse<Livro> | null>(null);
     const [filtros, setFiltros] = useState<Partial<Livro>>({});
-
-    useEffect(() => { carregarListagem(1); }, []);
+    const { register, handleSubmit, control, reset } = useForm<Livro>({});
 
     const excluir = (livro: Livro) => {
         setLivroSelecionado(livro);
         setShowModal(true);
     };
 
-    const mudarPagina = (pagina: number) => {
-        carregarListagem(pagina, filtros);
-    };
-
-    const confirmarExclusao = () => {
-        if (!livroSelecionado)
+    const confirmarExclusao = useCallback((livro: Livro) => {
+        if (!livro)
             return;
 
-        LivroService.remover(livroSelecionado.id)
+        LivroService.remover(livro.id)
             .then(() => {
                 toast.success("Livro excluído com sucesso!");
                 carregarListagem();
@@ -46,27 +43,34 @@ export default function LivroListagem() {
                 setShowModal(false);
                 setLivroSelecionado(null);
             });
-    }
+    }, []);
 
-    const carregarListagem = (numeroPagina: number = 1, filtros: Record<string, any> = {}) => {
-        LivroService.listagem(numeroPagina, filtros)
+    const carregarListagem = useCallback((page: number = 1, filters: Partial<Livro> = {}) => {
+        LivroService.listagem(page, filters)
             .then(response => {
                 setPaginator(response.data);
                 setLivros(response.data.data);
             })
-            .catch(err => toast.error("Erro: ", err));
-    }
+            .catch((err) => {
+                console.error(err);
+                toast.error("Erro ao carregar a listagem de livros");
+            });
+    }, []);
 
-    const { register, handleSubmit, control, reset } = useForm<Livro>({});
+    const mudarPagina = useCallback((page: number) => {
+        carregarListagem(page, filtros);
+    }, [carregarListagem, filtros]);
+
+
+    useEffect(() => { carregarListagem(1); }, [carregarListagem]);
 
     const onSubmit = (data: Livro) => {
         carregarListagem(1, data);
         setFiltros(data);
     };
 
-
     return (
-        <>
+        <div>
             <main className="container">
                 <header className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Listagem de Livros</h2>
@@ -74,13 +78,15 @@ export default function LivroListagem() {
                 </header>
 
                 <section className="mb-4">
-                    <LivroFormularioPage
-                        register={register}
-                        control={control}
-                        handleSubmit={handleSubmit(onSubmit)}
-                        action="pesquisa"
-                        reset={reset}
-                    />
+                    <Form onSubmit={handleSubmit(onSubmit)}>
+                        <LivroFormFields
+                            register={register}
+                            control={control}
+                            action='pesquisa'
+                            visibleFields={["no_nome", "no_autor"]}
+                        />
+                        <FormButtons action='pesquisa' reset={reset} />
+                    </Form>
                 </section>
 
                 <section className="mb-4">
@@ -102,6 +108,6 @@ export default function LivroListagem() {
                     message={`Deseja realmente excluir o livro "${livroSelecionado?.no_nome}"?`}
                 />
             </main>
-        </>
+        </div>
     );
 }
