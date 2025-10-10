@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import type { Venda } from "../../model/Venda";
 import VendaFormFields from "../../pages/Venda/VendaFormFields";
 import FormButtons from "../form/FormButtons";
 
 export default function VendaAdicionar() {
-  const { handleSubmit } = useForm<Venda>({});
+  const { handleSubmit, register, control, setValue, watch } = useForm();
   const [errors, setErrors] = useState<{ [key: string]: string[] }>();
 
-  const onSubmit = (data: Venda) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Venda> = (data) => {
+    console.log("SUBMIT acionado ✅", data);
   };
 
   return (
@@ -21,7 +21,14 @@ export default function VendaAdicionar() {
 
       <section className="mb-4">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <VendaFormFields errors={errors} action="cadastro" />
+          <VendaFormFields
+            register={register}
+            setValue={setValue}
+            control={control}
+            watch={watch}
+            errors={errors}
+          />
+          <br />
           <FormButtons action="cadastro" urlVoltar="/venda" />
         </Form>
       </section>

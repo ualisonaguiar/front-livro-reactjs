@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
+import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import type { Livro } from "../../model/Livro";
-import LivroFormularioPage from "../../pages/Livro/___LivroFormularioPage";
-import LivroService from "../../service/LivroService";
-import { Form } from "react-bootstrap";
 import LivroFormFields from "../../pages/Livro/LivroFormFields";
+import LivroService from "../../service/LivroService";
 import FormButtons from "../form/FormButtons";
 
 const LivrEditarForm = () => {
   const { id } = useParams();
-  const { register, handleSubmit, control, reset } = useForm<Livro>();
+  const { register, handleSubmit, control, reset } = useForm();
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
   const navigate = useNavigate();
 

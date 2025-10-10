@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import type { UseFormRegister } from "react-hook-form";
-import CEPService from "../../service/CEPService";
+import { type UseFormRegister } from "react-hook-form";
+import { toast } from "react-toastify";
+import type { Endereco } from "../../model/Endereco";
+import EnderecoService from "../../service/EnderecoService";
+import MessageAguardeComponent from "../Messages/MessageAguardeComponent";
 
 type EnderecoForm = {
   nu_cep: string;
@@ -17,16 +21,36 @@ interface CEPComponentProps {
 }
 
 const CEPComponent = ({ register }: CEPComponentProps) => {
+  const [endereco, setEndereco] = useState<Endereco>();
+  const [loading, setLoading] = useState(false);
+
+  const limparEndereco = (): Endereco => ({
+    cep: "",
+    logradouro: "",
+    bairro: "",
+    localidade: "",
+    uf: "",
+    estado: "",
+  });
+
   const onChangeBuscaEndereco = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    if (event.target.value.length === 8) {
-      CEPService.buscarPorEndereco(event.target.value)
+    const cep = event.target.value;
+
+    setEndereco(limparEndereco());
+
+    if (/^\d{8}$/.test(cep)) {
+      setLoading(true);
+      EnderecoService.buscarPorEndereco(cep)
         .then((response) => {
-          console.log(response);
+          setEndereco(response.data);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          toast.error("CEP: " + cep + " não encontrado.");
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -50,7 +74,11 @@ const CEPComponent = ({ register }: CEPComponentProps) => {
         <Col xs={6}>
           <Form.Group controlId="ds_logradouro">
             <Form.Label>Logradouro</Form.Label>
-            <Form.Control type="text" disabled={true} />
+            <Form.Control
+              type="text"
+              disabled={true}
+              value={endereco?.logradouro}
+            />
           </Form.Group>
         </Col>
 
@@ -76,24 +104,34 @@ const CEPComponent = ({ register }: CEPComponentProps) => {
         <Col xs={6}>
           <Form.Group controlId="ds_bairro">
             <Form.Label>Bairro</Form.Label>
-            <Form.Control type="text" disabled={true} />
+            <Form.Control
+              type="text"
+              disabled={true}
+              value={endereco?.bairro}
+            />
           </Form.Group>
         </Col>
 
         <Col xs={4}>
           <Form.Group controlId="ds_localidade">
             <Form.Label>Cidade</Form.Label>
-            <Form.Control type="text" disabled={true} />
+            <Form.Control
+              type="text"
+              disabled={true}
+              value={endereco?.localidade}
+            />
           </Form.Group>
         </Col>
 
         <Col xs={2}>
           <Form.Group controlId="ds_uf">
             <Form.Label>UF</Form.Label>
-            <Form.Control type="text" disabled={true} />
+            <Form.Control type="text" disabled={true} value={endereco?.uf} />
           </Form.Group>
         </Col>
       </Row>
+
+      <MessageAguardeComponent show={loading} message="Buscando endereço..." />
     </>
   );
 };

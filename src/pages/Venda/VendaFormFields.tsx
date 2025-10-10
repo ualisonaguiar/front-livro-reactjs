@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import CEPComponent from "../../components/Endereco/CEPComponent";
+import MessageFormCampo from "../../components/Messages/MessageFormCampo";
+import { PrecoInputForm } from "../../components/form/PrecoInputForm";
 import type { Livro } from "../../model/Livro";
-import type { Venda } from "../../model/Venda";
 import LivroService from "../../service/LivroService";
 import type { FormProps } from "../../types/form-props";
 import LivroFormFields from "../Livro/LivroFormFields";
-import MessageFormCampo from "../../components/Messages/MessageFormCampo";
-import { PrecoInputForm } from "../../components/form/PrecoInputForm";
-import CEPComponent from "../../components/Endereco/CEPComponent";
 
 export default function VendaFormFields({
+  register,
+  setValue,
+  control,
+  watch,
   errors = {},
   action = "cadastro",
-}: FormProps<Venda>) {
-  const { register, control, setValue, watch } = useForm<Venda>();
+}: FormProps) {
+
   const disabledFields: boolean = action == "visualizacao";
   const [livros, setLivros] = useState<Livro[]>([]);
   const [exibeDetalheLivro, setxibeDetalheLivro] = useState(false);
@@ -34,7 +36,7 @@ export default function VendaFormFields({
       Number(String(livroSelecionado?.nu_preco || "0").replace(",", ".")) || 0;
 
     const total = Math.round(quantidadeInt * precoFloat * 100) / 100;
-    setValue('nu_preco_total', total);
+    setValue("nu_preco_total", total);
 
     const totalFormatado = total.toLocaleString("pt-BR", {
       style: "currency",
@@ -162,7 +164,7 @@ export default function VendaFormFields({
         </Row>
       </Form.Group>
 
-      <CEPComponent register={register}/>
+      <CEPComponent register={register} />
     </fieldset>
   );
 }
