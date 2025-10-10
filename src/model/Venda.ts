@@ -7,4 +7,5 @@ export interface Venda {
     livro: Livro;
     nu_preco: number;
     nu_quantidade: number;
+    nu_preco_total: number;
 }

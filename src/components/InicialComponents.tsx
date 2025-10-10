@@ -1,8 +1,7 @@
 export default function InicialComponents() {
-
-    return (
-        <>
-        <p>Página inical</p>
-        </>
-    );
+  return (
+    <>
+      <p>Página inical</p>
+    </>
+  );
 }
