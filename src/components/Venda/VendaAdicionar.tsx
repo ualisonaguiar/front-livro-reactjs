@@ -3,14 +3,27 @@ import { Form } from "react-bootstrap";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { Venda } from "../../model/Venda";
 import VendaFormFields from "../../pages/Venda/VendaFormFields";
+import VendaService from "../../service/VendaService";
 import FormButtons from "../form/FormButtons";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function VendaAdicionar() {
   const { handleSubmit, register, control, setValue, watch } = useForm();
   const [errors, setErrors] = useState<{ [key: string]: string[] }>();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Venda> = (data) => {
-    console.log("SUBMIT acionado ✅", data);
+    VendaService.adicionar(data).then(
+      () => {
+        toast.success("Venda registrada com sucesso!");
+        navigate("/venda");
+      },
+      (error) => {
+        toast.error("Falha ao registrar a venda.");
+        setErrors(error.response?.data || {});
+      }
+    );
   };
 
   return (

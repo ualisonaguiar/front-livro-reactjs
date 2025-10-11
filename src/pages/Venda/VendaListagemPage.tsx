@@ -15,7 +15,7 @@ const VendaListagemPage = ({ vendas }: Props) => {
         <Table striped>
           <thead>
             <tr>
-              <th>CPF</th>
+              <th>Cliente</th>
               <th>Livro</th>
               <th>Quantidade</th>
               <th>Total</th>
@@ -25,7 +25,7 @@ const VendaListagemPage = ({ vendas }: Props) => {
           <tbody>
             {vendas.map((venda) => (
               <tr key={venda.id}>
-                <td>{venda.nu_cpf}</td>
+                <td>{venda.usuario.ds_nome}</td>
                 <td>{venda.livro.no_nome}</td>
                 <td>{venda.nu_quantidade}</td>
                 <td>
