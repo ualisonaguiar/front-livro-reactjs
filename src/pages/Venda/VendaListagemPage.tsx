@@ -30,11 +30,12 @@ const VendaListagemPage = ({ vendas }: Props) => {
                 <td>{venda.nu_quantidade}</td>
                 <td>
                   {CurrencyUtils.formatarMoeda(
-                    venda.nu_quantidade * venda.nu_preco
+                    venda.nu_quantidade *
+                      CurrencyUtils.limparMoeda(venda.nu_preco)
                   )}
                 </td>
                 <td>
-                  <Link to={`/livro/edit/${venda.id}`}>
+                  <Link to={`/venda/edit/${venda.id}`}>
                     <BiPen>Editar</BiPen>
                   </Link>
                 </td>

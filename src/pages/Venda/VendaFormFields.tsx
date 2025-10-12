@@ -3,6 +3,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import CEPComponent from "../../components/Endereco/CEPComponent";
 import MessageFormCampo from "../../components/Messages/MessageFormCampo";
+import { VendaUtils } from "../../components/Utils/VendaUtils";
 import { PrecoInputForm } from "../../components/form/PrecoInputForm";
 import type { Livro } from "../../model/Livro";
 import LivroService from "../../service/LivroService";
@@ -17,13 +18,11 @@ export default function VendaFormFields({
   errors = {},
   action = "cadastro",
 }: FormProps) {
-
   const disabledFields: boolean = action == "visualizacao";
   const [livros, setLivros] = useState<Livro[]>([]);
   const [exibeDetalheLivro, setxibeDetalheLivro] = useState(false);
   const [livroSelecionado, setLivroSelecionado] = useState<Livro>();
   const [precoFormatado, setPrecoFormatado] = useState("R$ 0,00");
-
   const quantidade = watch("nu_quantidade");
 
   useEffect(() => {
@@ -31,18 +30,32 @@ export default function VendaFormFields({
   }, []);
 
   useEffect(() => {
+    if (!livros.length) return;
+
+    const livroIdSelecionado = Number(watch("livro.id"));
+    if (!livroIdSelecionado) return;
+
+    const livro = livros.find(({ id }) => id === livroIdSelecionado);
+    if (livro) {
+      setLivroSelecionado(livro);
+    }
+  }, [livros, watch("livro.id")]);
+
+  useEffect(() => {
     const quantidadeInt = Number(quantidade) || 0;
-    const precoFloat =
-      Number(String(livroSelecionado?.nu_preco || "0").replace(",", ".")) || 0;
 
-    const total = Math.round(quantidadeInt * precoFloat * 100) / 100;
-    setValue("nu_preco_total", total);
+    if (quantidadeInt > livroSelecionado?.nu_quantidade) {
+      toast.warning("A quantidade é superior que encontra-se no estoque");
+      setValue("nu_quantidade", null);
+      return;
+    }
 
-    const totalFormatado = total.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-    setPrecoFormatado(totalFormatado);
+    const precoVenda = VendaUtils.calcularTotal(
+      quantidadeInt,
+      parseFloat(livroSelecionado?.nu_preco)
+    );
+
+    setPrecoFormatado(precoVenda.totalFormatado);
   }, [livroSelecionado, quantidade, setValue]);
 
   const carregarListagemLivros = () => {
@@ -57,7 +70,6 @@ export default function VendaFormFields({
     const livroId = Number(event.target.value);
     const livroSelecionado = livros.find(({ id }) => id === livroId);
 
-    // define valores padrão
     const valoresLivro = livroSelecionado
       ? livroSelecionado
       : {
@@ -114,6 +126,8 @@ export default function VendaFormFields({
                 type="number"
                 {...register("nu_quantidade", { required: true })}
                 disabled={disabledFields}
+                min={1}
+                step={1}
               />
               {errors?.nu_quantidade?.map?.((error, index) => (
                 <MessageFormCampo key={index} message={error} />
@@ -124,7 +138,12 @@ export default function VendaFormFields({
           <Col>
             <Form.Group controlId="quantity">
               <Form.Label>Total</Form.Label>
-              <Form.Control type="text" disabled value={precoFormatado} />
+              <Form.Control
+                type="text"
+                disabled
+                value={precoFormatado}
+                {...register("nu_preco_total")}
+              />
             </Form.Group>
           </Col>
         </Row>
@@ -164,7 +183,7 @@ export default function VendaFormFields({
         </Row>
       </Form.Group>
 
-      <CEPComponent register={register} />
+      <CEPComponent register={register} errors={errors} />
     </fieldset>
   );
 }

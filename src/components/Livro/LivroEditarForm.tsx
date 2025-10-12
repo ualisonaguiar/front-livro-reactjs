@@ -9,7 +9,7 @@ import LivroFormFields from "../../pages/Livro/LivroFormFields";
 import LivroService from "../../service/LivroService";
 import FormButtons from "../form/FormButtons";
 
-const LivrEditarForm = () => {
+const LivroEditarForm = () => {
   const { id } = useParams();
   const { register, handleSubmit, control, reset } = useForm();
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
@@ -52,4 +52,4 @@ const LivrEditarForm = () => {
   );
 };
 
-export default LivrEditarForm;
+export default LivroEditarForm;

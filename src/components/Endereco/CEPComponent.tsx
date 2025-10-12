@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import type { Endereco } from "../../model/Endereco";
 import EnderecoService from "../../service/EnderecoService";
 import MessageAguardeComponent from "../Messages/MessageAguardeComponent";
+import MessageFormCampo from "../Messages/MessageFormCampo";
 
 type EnderecoForm = {
   nu_cep: string;
@@ -18,9 +19,10 @@ type EnderecoForm = {
 
 interface CEPComponentProps {
   register: UseFormRegister<EnderecoForm>;
+  errors?: { [key: string]: string[] };
 }
 
-const CEPComponent = ({ register }: CEPComponentProps) => {
+const CEPComponent = ({ register, errors }: CEPComponentProps) => {
   const [endereco, setEndereco] = useState<Endereco>();
   const [loading, setLoading] = useState(false);
 
@@ -69,6 +71,9 @@ const CEPComponent = ({ register }: CEPComponentProps) => {
               onChange={onChangeBuscaEndereco}
             />
           </Form.Group>
+          {errors?.nu_cep?.map?.((error, index) => (
+            <MessageFormCampo key={index} message={error} />
+          ))}
         </Col>
 
         <Col xs={6}>
@@ -78,6 +83,7 @@ const CEPComponent = ({ register }: CEPComponentProps) => {
               type="text"
               disabled={true}
               value={endereco?.logradouro}
+              {...register("ds_logradouro")}
             />
           </Form.Group>
         </Col>
@@ -90,6 +96,13 @@ const CEPComponent = ({ register }: CEPComponentProps) => {
               {...register("ds_numero", { required: true })}
             />
           </Form.Group>
+          {errors?.ds_numero?.map?.((error, index) => (
+            <MessageFormCampo
+              key={index}
+              message={error}
+              {...register("ds_numero")}
+            />
+          ))}
         </Col>
 
         <Col xs={3}>
@@ -108,25 +121,32 @@ const CEPComponent = ({ register }: CEPComponentProps) => {
               type="text"
               disabled={true}
               value={endereco?.bairro}
+              {...register("ds_bairro")}
             />
           </Form.Group>
         </Col>
 
         <Col xs={4}>
-          <Form.Group controlId="ds_localidade">
+          <Form.Group controlId="ds_municipio">
             <Form.Label>Cidade</Form.Label>
             <Form.Control
               type="text"
               disabled={true}
               value={endereco?.localidade}
+              {...register("ds_municipio")}
             />
           </Form.Group>
         </Col>
 
         <Col xs={2}>
-          <Form.Group controlId="ds_uf">
+          <Form.Group controlId="ds_estado">
             <Form.Label>UF</Form.Label>
-            <Form.Control type="text" disabled={true} value={endereco?.uf} />
+            <Form.Control
+              type="text"
+              disabled={true}
+              value={endereco?.uf}
+              {...register("ds_estado")}
+            />
           </Form.Group>
         </Col>
       </Row>

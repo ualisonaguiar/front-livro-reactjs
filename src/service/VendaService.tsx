@@ -11,17 +11,29 @@ class VendaService {
   }
 
   async adicionar(venda: Venda) {
-    return api.post(
-      this.contexto,
-      {
-        livro_id: venda.livro.id,
-        nu_quantidade: venda.nu_quantidade,
-        nu_cep: venda.nu_cep,
-        ds_complemento: venda.ds_complemento,
-        ds_numero: venda.ds_numero
-      },
+    return api.post(this.contexto, this.criarPayload(venda), getRequiredAuth());
+  }
+
+  async alterar(id: number, venda: Venda) {
+    return api.put(
+      `${this.contexto}/${id}`,
+      this.criarPayload(venda),
       getRequiredAuth()
     );
+  }
+
+  private criarPayload(venda: Venda) {
+    return {
+      livro_id: venda.livro.id,
+      nu_quantidade: venda.nu_quantidade,
+      nu_cep: venda.nu_cep,
+      ds_complemento: venda.ds_complemento,
+      ds_numero: venda.ds_numero,
+    };
+  }
+
+  async buscarPorId(id: number) {
+    return api.get<Venda>(`${this.contexto}/${id}`, getRequiredAuth());
   }
 }
 
