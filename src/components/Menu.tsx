@@ -18,6 +18,11 @@ export function Menu() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/inicio">Inicio</Nav.Link>
+
+            <NavDropdown title="Categoria" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/categoria">Listagem</NavDropdown.Item>
+            </NavDropdown>
+
             <NavDropdown title="Livro" id="basic-nav-dropdown">
               <NavDropdown.Item href="/livro">Listagem</NavDropdown.Item>
               <NavDropdown.Item href="/venda">Venda</NavDropdown.Item>

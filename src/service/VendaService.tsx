@@ -22,6 +22,10 @@ class VendaService {
     );
   }
 
+  async remover(id: number) {
+    return api.delete(`${this.contexto}/${id}`, getRequiredAuth());
+  }
+
   private criarPayload(venda: Venda) {
     return {
       livro_id: venda.livro.id,

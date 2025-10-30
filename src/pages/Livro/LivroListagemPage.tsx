@@ -35,8 +35,8 @@ const LivroListagemPage = ({ livros, excluir }: Props) => {
                   {new Date(livro.dt_lancamento).toLocaleDateString("pt-BR")}
                 </td>
                 <td>
-                  <Link to={`/livro/edit/${livro.id}`}>
-                    <BiPen>Editar</BiPen>
+                  <Link to={`/livro/edit/${livro.id}`} title="Editar">
+                    <BiPen />
                   </Link>
                   <Link
                     to="#"
@@ -48,8 +48,8 @@ const LivroListagemPage = ({ livros, excluir }: Props) => {
                   >
                     <BiTrash />
                   </Link>
-                  <Link to={`/livro/show/${livro.id}`}>
-                    <BiInfoCircle>Editar</BiInfoCircle>
+                  <Link to={`/livro/show/${livro.id}`} title="Visualizar">
+                    <BiInfoCircle />
                   </Link>
                 </td>
               </tr>

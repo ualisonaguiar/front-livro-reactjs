@@ -2,13 +2,14 @@ import { Table } from "react-bootstrap";
 import type { Venda } from "../../model/Venda";
 import { CurrencyUtils } from "../../components/Utils/CurrencyUtils";
 import { Link } from "react-router-dom";
-import { BiPen } from "react-icons/bi";
+import { BiPen, BiTrash } from "react-icons/bi";
 
 interface Props {
   vendas: Venda[];
+  excluir: (livro: Venda) => void;
 }
 
-const VendaListagemPage = ({ vendas }: Props) => {
+const VendaListagemPage = ({ vendas, excluir }: Props) => {
   return (
     <>
       <fieldset className="border p-2">
@@ -35,8 +36,19 @@ const VendaListagemPage = ({ vendas }: Props) => {
                   )}
                 </td>
                 <td>
-                  <Link to={`/venda/edit/${venda.id}`}>
+                  <Link to={`/venda/edit/${venda.id}`} title="Editar">
                     <BiPen>Editar</BiPen>
+                  </Link>
+
+                  <Link
+                    to="#"
+                    title="Excluir"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      excluir(venda);
+                    }}
+                  >
+                    <BiTrash />
                   </Link>
                 </td>
               </tr>

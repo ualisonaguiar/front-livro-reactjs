@@ -8,6 +8,8 @@ import LivroViewForm from "../components/Livro/LivroViewForm";
 import VendaForm from "../components/Venda/VendaForm";
 import VendaListagem from "../components/Venda/VendaListagem";
 import PrivateRoute from "./PrivateRoute";
+import CategoriaListagem from "../components/Categoria/CategoriaListagem";
+import CategoriaForm from "../components/Categoria/CategoriaForm";
 
 export function AppRouter() {
   return (
@@ -20,6 +22,9 @@ export function AppRouter() {
         <Route path="/livro/add" element={<LivroAdicionarForm />} />
         <Route path="/livro/edit/:id" element={<LivroEditarForm />} />
         <Route path="/livro/show/:id" element={<LivroViewForm />} />
+
+        <Route path="/categoria" element={<CategoriaListagem />} />
+        <Route path="/categoria/add" element={<CategoriaForm />} />
 
         <Route path="/venda" element={<VendaListagem />} />
         <Route path="/venda/add" element={<VendaForm />} />
